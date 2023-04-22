@@ -1,0 +1,24 @@
+name: Tests
+
+on: [pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+
+      - uses: pnpm/action-setup@v2
+        with:
+          run_install: true
+
+      - name: Run linters
+        run: pnpm lint
+
+      - name: Build
+        run: pnpm build
