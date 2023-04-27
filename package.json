@@ -6,6 +6,7 @@
 	"author": "Kacper Polak <strixu155@gmail.com>",
 	"scripts": {
 		"prepare": "husky install",
+		"postinstall": "prisma generate",
 		"dev": "concurrently --kill-others-on-fail \"pnpm database:dev:start\" \"wait-on tcp:5432 && pnpm prisma:migrate:dev && pnpm prisma generate && pnpm next:dev\"",
 		"next:dev": "next dev",
 		"next:build": "next build",
