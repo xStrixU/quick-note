@@ -18,7 +18,7 @@ jobs:
           run_install: true
 
       - name: Run linters
-        run: pnpm lint
+        run: pnpm next:lint
 
       - name: Build
-        run: pnpm build
+        run: pnpm next:build
