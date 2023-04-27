@@ -1,4 +1,4 @@
 module.exports = {
-	'*.{ts,tsx}': [() => 'pnpm lint:fix'],
+	'*.{ts,tsx}': [() => 'pnpm next:lint:fix'],
 	'*.{js,json,css}': ['pnpm prettier -w'],
 };

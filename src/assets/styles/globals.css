@@ -1,1 +1,15 @@
 @import url('./tailwind.css');
+@import url('./variables.css');
+
+html,
+body {
+	height: 100%;
+}
+
+body {
+	background: theme('colors.gray.50');
+}
+
+.dark body {
+	background: theme('colors.neutral.800');
+}

@@ -18,7 +18,7 @@ jobs:
           run_install: true
 
       - name: Run linters
-        run: pnpm lint
+        run: pnpm next:lint
 
       - name: Build
-        run: pnpm build
+        run: SKIP_ENV_VALIDATION=1 pnpm next:build

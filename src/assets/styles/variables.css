@@ -1,0 +1,9 @@
+:root {
+	--color-primary: theme(colors.indigo.600);
+	--color-foreground: theme(colors.neutral.800);
+}
+
+:root.dark {
+	--color-primary: theme(colors.indigo.500);
+	--color-foreground: theme(colors.white);
+}
