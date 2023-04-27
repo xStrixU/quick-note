@@ -42,6 +42,7 @@ const serverProcessEnv = {
 	...clientProcessEnv,
 };
 
-const { data } = validateEnvVariables(serverProcessEnv, serverEnvSchema);
-
-export { data as serverEnv };
+export const serverEnv = validateEnvVariables(
+	serverProcessEnv,
+	serverEnvSchema
+);

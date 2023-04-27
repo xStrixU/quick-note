@@ -21,4 +21,4 @@ jobs:
         run: pnpm next:lint
 
       - name: Build
-        run: pnpm next:build
+        run: SKIP_ENV_VALIDATION=1 pnpm next:build

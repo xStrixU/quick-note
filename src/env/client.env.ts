@@ -6,6 +6,7 @@ export const clientEnvSchema = z.object({});
 
 export const clientProcessEnv = {};
 
-const { data } = validateEnvVariables(clientProcessEnv, clientEnvSchema);
-
-export { data as clientEnv };
+export const clientEnv = validateEnvVariables(
+	clientProcessEnv,
+	clientEnvSchema
+);
