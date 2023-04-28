@@ -5,7 +5,7 @@ import { MdAlternateEmail } from 'react-icons/md';
 
 import { useSignInForm } from './useSignInForm';
 
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/Button/Button';
 import { PasswordInput } from '@/components/ui/inputs/PasswordInput/PasswordInput';
 import { TextInput } from '@/components/ui/inputs/TextInput/TextInput';
 

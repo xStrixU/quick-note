@@ -1,7 +1,7 @@
 import { AuthFormBox } from '../AuthFormBox';
 import { SignUpForm } from './SignUpForm';
 
-import { Link } from '@/components/ui/Link';
+import { Link } from '@/components/ui/Link/Link';
 
 export const SignUpFormBox = () => (
 	<>
