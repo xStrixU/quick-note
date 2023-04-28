@@ -6,7 +6,7 @@ import { signIn } from 'next-auth/react';
 import { useEffect } from 'react';
 import { toast } from 'react-hot-toast';
 
-import { Button } from '../ui/Button';
+import { Button } from '../ui/Button/Button';
 
 import type { ClientSafeProvider } from 'next-auth/react';
 
