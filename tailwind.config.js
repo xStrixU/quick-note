@@ -8,7 +8,10 @@ module.exports = {
 				primary: 'var(--color-primary)',
 				foreground: 'var(--color-foreground)',
 			},
+			screens: {
+				desktop: '500px',
+			},
 		},
 	},
-	plugins: [],
+	plugins: [require('tailwind-scrollbar')({ nocompatible: true })],
 };
