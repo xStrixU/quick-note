@@ -1,5 +1,7 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
+import { toast } from 'react-hot-toast';
 import { BiUser } from 'react-icons/bi';
 import { HiOutlineLockClosed } from 'react-icons/hi';
 import { MdAlternateEmail } from 'react-icons/md';
@@ -11,12 +13,21 @@ import { PasswordInput } from '@/components/ui/inputs/PasswordInput/PasswordInpu
 import { TextInput } from '@/components/ui/inputs/TextInput/TextInput';
 
 export const SignUpForm = () => {
+	const router = useRouter();
 	const {
 		onSubmit,
 		register,
 		isLoading,
 		formState: { errors },
-	} = useSignUpForm();
+	} = useSignUpForm({
+		onSuccess: () => {
+			toast.success('Signed up successfully');
+			router.push('/sign-in');
+		},
+		onUnknownError: error => {
+			toast.error(error);
+		},
+	});
 
 	return (
 		<form onSubmit={onSubmit}>

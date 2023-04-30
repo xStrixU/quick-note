@@ -1,20 +1,21 @@
-import { useRouter } from 'next/navigation';
-import { toast } from 'react-hot-toast';
-
 import { signUpFormSchema } from './SignUpForm.schema';
 
 import { useZodForm } from '@/hooks/useZodForm';
 import { isTRPCClientError, trpc } from '@/lib/trpc';
 
-export const useSignUpForm = () => {
+interface useSignUpFormActions {
+	onSuccess: () => void;
+	onUnknownError: (message: string) => void;
+}
+
+export const useSignUpForm = ({
+	onSuccess,
+	onUnknownError,
+}: useSignUpFormActions) => {
 	const { mutate, isLoading } = trpc.users.create.useMutation();
-	const router = useRouter();
 	const { setError, ...rest } = useZodForm(signUpFormSchema, data => {
 		mutate(data, {
-			onSuccess: () => {
-				toast.success('Signed up successfully');
-				router.push('/sign-in');
-			},
+			onSuccess,
 			onError: err => {
 				if (isTRPCClientError(err)) {
 					const { data, message } = err;
@@ -24,7 +25,7 @@ export const useSignUpForm = () => {
 							setError('email', { message });
 							break;
 						default:
-							toast.error(message);
+							onUnknownError(message);
 					}
 				}
 			},
