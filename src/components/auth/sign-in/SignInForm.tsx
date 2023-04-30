@@ -1,5 +1,7 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
+import { toast } from 'react-hot-toast';
 import { HiOutlineLockClosed } from 'react-icons/hi';
 import { MdAlternateEmail } from 'react-icons/md';
 
@@ -10,12 +12,20 @@ import { PasswordInput } from '@/components/ui/inputs/PasswordInput/PasswordInpu
 import { TextInput } from '@/components/ui/inputs/TextInput/TextInput';
 
 export const SignInForm = () => {
+	const router = useRouter();
 	const {
 		onSubmit,
 		register,
 		isLoading,
 		formState: { errors },
-	} = useSignInForm();
+	} = useSignInForm({
+		onSuccess: () => {
+			router.push('/');
+		},
+		onUnknownError: error => {
+			toast.error(error);
+		},
+	});
 
 	return (
 		<form onSubmit={onSubmit}>

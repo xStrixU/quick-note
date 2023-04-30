@@ -1,12 +1,19 @@
 import { signIn } from 'next-auth/react';
 import { useState } from 'react';
-import { toast } from 'react-hot-toast';
 
 import { signInFormSchema } from './SignInForm.schema';
 
 import { useZodForm } from '@/hooks/useZodForm';
 
-export const useSignInForm = () => {
+interface UseSignInFormActions {
+	onSuccess: () => void;
+	onUnknownError: (error: string) => void;
+}
+
+export const useSignInForm = ({
+	onSuccess,
+	onUnknownError,
+}: UseSignInFormActions) => {
 	const [isLoading, setIsLoading] = useState(false);
 	const { setError, ...rest } = useZodForm(signInFormSchema, async data => {
 		setIsLoading(true);
@@ -18,7 +25,9 @@ export const useSignInForm = () => {
 
 		setIsLoading(false);
 
-		if (response?.error) {
+		if (!response?.error) {
+			onSuccess();
+		} else {
 			const { error } = response;
 
 			switch (error) {
@@ -32,7 +41,7 @@ export const useSignInForm = () => {
 				default:
 					if (error === 'OAuthAccountNotLinked') return;
 
-					toast.error(error);
+					onUnknownError(error);
 			}
 		}
 	});
