@@ -9,7 +9,7 @@ type UserAvatarProps = Readonly<{
 }>;
 
 export const UserAvatar = ({ user }: UserAvatarProps) => (
-	<div className="relative flex h-9 w-9 select-none items-center justify-center rounded-full bg-neutral-300 text-sm font-medium text-neutral-700">
+	<div className="relative flex h-9 w-9 shrink-0 select-none items-center justify-center rounded-full bg-neutral-300 text-sm font-medium text-neutral-700">
 		{user.image ? (
 			<Image
 				src={user.image}

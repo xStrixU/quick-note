@@ -22,6 +22,6 @@ export const NoteListSectionHeader = ({
 		) : (
 			<MdExpandMore size={18} className="shrink-0" />
 		)}
-		<h2 className="ml-1 mr-auto truncate font-bold">{title}</h2>
+		<h2 className="ml-1 truncate font-bold">{title}</h2>
 	</button>
 );
