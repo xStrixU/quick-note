@@ -1,22 +1,25 @@
-import Link from 'next/link';
-
 import { NoteListItemIcon } from './NoteListItemIcon';
+
+import { ActiveLink } from '@/components/shared/ActiveLink';
 
 import { DEFAULT_NOTE_TITLE } from '@/lib/constants';
 
+import type { Note } from '@/server/modules/notes/notes.schemas';
+
 type NoteListItemProps = Readonly<{
-	title: string | null;
-	icon: string | null;
+	note: Note;
 }>;
 
-export const NoteListItem = ({ title, icon }: NoteListItemProps) => (
+export const NoteListItem = ({ note }: NoteListItemProps) => (
 	<li>
-		<Link
-			href="/"
-			className="flex rounded p-1 pl-3 hover:bg-gray-200 dark:hover:bg-neutral-700"
+		<ActiveLink
+			href={`/${note.id}`}
+			className="flex rounded p-1 pl-3"
+			notActiveClassName="hover:bg-gray-200 hover:dark:bg-neutral-700"
+			activeClassName="font-bold bg-gray-300 dark:bg-neutral-600"
 		>
-			<NoteListItemIcon icon={icon} />
-			<p className="ml-1.5 truncate">{title ?? DEFAULT_NOTE_TITLE}</p>
-		</Link>
+			<NoteListItemIcon icon={null} />
+			<p className="ml-1.5 truncate">{note.title ?? DEFAULT_NOTE_TITLE}</p>
+		</ActiveLink>
 	</li>
 );

@@ -7,7 +7,7 @@ const MainLayout = ({ children }: { readonly children: ReactNode }) => (
 	<PrivateRoute>
 		<div className="flex h-full overflow-hidden">
 			<Sidebar />
-			<main className="hidden grow desktop:block">{children}</main>
+			{children}
 		</div>
 	</PrivateRoute>
 );
