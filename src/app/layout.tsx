@@ -13,6 +13,11 @@ export const metadata = {
 		template: `%s | ${APP_NAME}`,
 	},
 	description: `${APP_NAME} - Keep your thoughts organized and never miss an idea!`,
+	viewport: {
+		width: 'device-width',
+		initialScale: 1,
+		userScalable: 'no',
+	},
 };
 
 const RootLayout = ({ children }: { readonly children: ReactNode }) => (
