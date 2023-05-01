@@ -10,7 +10,9 @@ type Story = StoryObj<typeof LinkComponent>;
 
 export const Link: Story = {
 	args: {
-		href: '/',
+		href: {
+			pathname: '/',
+		},
 		children: 'Lorem Ipsum',
 	},
 };

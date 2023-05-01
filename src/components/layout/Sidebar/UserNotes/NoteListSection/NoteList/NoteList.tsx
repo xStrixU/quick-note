@@ -9,7 +9,7 @@ type NoteListProps = Readonly<{
 export const NoteList = ({ notes }: NoteListProps) => (
 	<ul>
 		{notes.map(note => (
-			<NoteListItem key={note.id} title={note.title} icon={null} />
+			<NoteListItem key={note.id} note={note} />
 		))}
 	</ul>
 );
