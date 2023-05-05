@@ -26,6 +26,7 @@
 		"@prisma/client": "4.13.0",
 		"@tanstack/react-query": "4.29.3",
 		"@tanstack/react-query-devtools": "4.29.3",
+		"@tinymce/tinymce-react": "4.3.0",
 		"@trpc/client": "10.21.1",
 		"@trpc/react-query": "10.21.1",
 		"@trpc/server": "10.21.1",
@@ -41,6 +42,8 @@
 		"server-only": "0.0.1",
 		"superjson": "1.12.3",
 		"tailwind-merge": "1.12.0",
+		"tinymce": "6.4.2",
+		"use-debounce": "9.0.4",
 		"zod": "3.21.4"
 	},
 	"devDependencies": {

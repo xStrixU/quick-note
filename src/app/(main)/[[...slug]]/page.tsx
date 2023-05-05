@@ -1,5 +1,8 @@
-import Link from 'next/link';
-import { IoIosArrowBack } from 'react-icons/io';
+import { notFound } from 'next/navigation';
+
+import { NoteEditor } from '@/components/note-editor/NoteEditor';
+
+import { getNoteById } from '@/lib/notes';
 
 import type { OptionalCatchAllParams } from '@/types/next';
 
@@ -7,8 +10,8 @@ type EditNotePageProps = Readonly<{
 	params: OptionalCatchAllParams<'slug'>;
 }>;
 
-const EditNotePage = ({ params: { slug } }: EditNotePageProps) => {
-	const noteId = slug?.[0] ?? null;
+const EditNotePage = async ({ params: { slug } }: EditNotePageProps) => {
+	const noteId = slug?.[0];
 
 	if (!noteId) {
 		return (
@@ -18,20 +21,13 @@ const EditNotePage = ({ params: { slug } }: EditNotePageProps) => {
 		);
 	}
 
-	return (
-		<>
-			<Link
-				href="/"
-				aria-label="Go back"
-				className="absolute left-4 top-4 text-foreground desktop:hidden"
-			>
-				<IoIosArrowBack size={26} />
-			</Link>
-			<div className="flex h-full items-center justify-center text-foreground">
-				Note ID: {noteId}
-			</div>
-		</>
-	);
+	try {
+		const note = await getNoteById(noteId);
+
+		return <NoteEditor note={note} />;
+	} catch (err) {
+		notFound();
+	}
 };
 
 export default EditNotePage;

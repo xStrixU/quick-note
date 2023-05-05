@@ -1,5 +1,16 @@
-import { createNoteHandler, getAllNotesHandler } from './notes.controller';
-import { getAllNotesOutputSchema, noteSchema } from './notes.schemas';
+import {
+	createNoteHandler,
+	getAllNotesHandler,
+	getNoteByIdHandler,
+	updateNoteByIdHandler,
+} from './notes.controller';
+import {
+	getAllNotesOutputSchema,
+	getNoteByIdSchema,
+	noteDetailsSchema,
+	noteSchema,
+	updateNoteByIdSchema,
+} from './notes.schemas';
 
 import { protectedProcecure, router } from '@/server/trpc';
 
@@ -10,4 +21,16 @@ export const notesRouter = router({
 	getAll: protectedProcecure
 		.output(getAllNotesOutputSchema)
 		.query(({ ctx }) => getAllNotesHandler(ctx.session.user)),
+	getById: protectedProcecure
+		.input(getNoteByIdSchema)
+		.output(noteDetailsSchema)
+		.query(({ input, ctx }) =>
+			getNoteByIdHandler({ input, user: ctx.session.user })
+		),
+	updateNoteById: protectedProcecure
+		.input(updateNoteByIdSchema)
+		.output(noteDetailsSchema)
+		.mutation(({ input, ctx }) =>
+			updateNoteByIdHandler({ input, user: ctx.session.user })
+		),
 });
