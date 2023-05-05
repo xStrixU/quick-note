@@ -2,7 +2,6 @@ import { useState } from 'react';
 
 import { CreateNoteButton } from './CreateNoteButton';
 import { NoteList } from './NoteList/NoteList';
-import { NoteListAlert } from './NoteListAlert';
 import { NoteListSectionHeader } from './NoteListSectionHeader';
 
 import type { Note } from '@/server/modules/notes/notes.schemas';
@@ -10,7 +9,7 @@ import type { Note } from '@/server/modules/notes/notes.schemas';
 type NoteListSectionProps = Readonly<{
 	title: string;
 	emptyMessage: string;
-	notes: Note[] | undefined;
+	notes: Note[];
 	isPrivate?: boolean;
 }>;
 
@@ -35,7 +34,7 @@ export const NoteListSection = ({
 					{notes?.length ? (
 						<NoteList notes={notes} />
 					) : (
-						<NoteListAlert message={notes ? emptyMessage : 'Loading...'} />
+						<p className="ml-4 truncate text-sm">{emptyMessage}</p>
 					)}
 				</>
 			)}

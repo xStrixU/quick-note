@@ -17,7 +17,10 @@ const EditNoteLayout = ({
 
 	return (
 		<main
-			className={twMerge('relative grow', !noteId && 'hidden desktop:block')}
+			className={twMerge(
+				'grow overflow-hidden',
+				!noteId && 'hidden desktop:block'
+			)}
 		>
 			{children}
 		</main>

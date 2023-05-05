@@ -26,3 +26,44 @@ export const getAllNotes = async (user: User) => {
 
 	return { privateNotes, externalNotes };
 };
+
+export const getNoteById = async ({ id, user }: { id: string; user: User }) => {
+	const note = await prisma.note.findFirst({
+		where: {
+			id,
+			userId: user.id,
+		},
+	});
+
+	return note;
+};
+
+export const updateNoteById = async ({
+	id,
+	data,
+	user,
+}: {
+	id: string;
+	data: Partial<{
+		title: string | null;
+		content: string;
+	}>;
+	user: User;
+}) => {
+	const note = await prisma.note.findFirst({
+		where: { id, userId: user.id },
+	});
+
+	if (!note) {
+		return null;
+	}
+
+	const updatedNote = await prisma.note.update({
+		where: {
+			id,
+		},
+		data,
+	});
+
+	return updatedNote;
+};
