@@ -64,6 +64,7 @@ model Note {
   userId    String   @map("user_id")
   title     String?
   content   String   @default("") @db.Text
+  isShared  Boolean  @default(false) @map("is_shared")
   createdAt DateTime @default(now()) @map("created_at")
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 

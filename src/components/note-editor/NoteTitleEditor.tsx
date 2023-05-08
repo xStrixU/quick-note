@@ -8,11 +8,11 @@ import { DEFAULT_NOTE_TITLE } from '@/lib/constants';
 
 import type { NoteDetails } from '@/server/modules/notes/notes.schemas';
 
-type TitleEditorProps = Readonly<{
+type NoteTitleEditorProps = Readonly<{
 	note: NoteDetails;
 }>;
 
-export const TitleEditor = ({ note }: TitleEditorProps) => {
+export const NoteTitleEditor = ({ note }: NoteTitleEditorProps) => {
 	const router = useRouter();
 	const updateNoteById = useUpdateNoteById();
 

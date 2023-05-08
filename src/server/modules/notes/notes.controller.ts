@@ -29,9 +29,19 @@ export const getNoteByIdHandler = async ({
 	input: GetNoteByIdInput;
 	user: User;
 }) => {
-	const note = await getNoteById({ id, user });
+	const note = await getNoteById(id);
 
-	if (!note) {
+	if (!note || note.userId !== user.id) {
+		throw new TRPCError({ code: 'NOT_FOUND' });
+	}
+
+	return note;
+};
+
+export const getNotePreviewByIdHandler = async ({ id }: GetNoteByIdInput) => {
+	const note = await getNoteById(id);
+
+	if (!note?.isShared) {
 		throw new TRPCError({ code: 'NOT_FOUND' });
 	}
 

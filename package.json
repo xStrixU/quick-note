@@ -6,7 +6,7 @@
 	"author": "Kacper Polak <strixu155@gmail.com>",
 	"scripts": {
 		"prepare": "husky install",
-		"postinstall": "prisma generate",
+		"postinstall": "node ./scripts/tinymce.js && prisma generate",
 		"dev": "concurrently --kill-others-on-fail \"pnpm database:dev:start\" \"wait-on tcp:5432 && pnpm prisma:migrate:dev && pnpm prisma generate && pnpm next:dev\"",
 		"test": "vitest",
 		"next:dev": "next dev",
@@ -32,6 +32,7 @@
 		"@trpc/server": "10.21.1",
 		"bcrypt": "5.1.0",
 		"client-only": "0.0.1",
+		"fs-extra": "11.1.1",
 		"next": "13.3.0",
 		"next-auth": "4.22.1",
 		"react": "18.2.0",
