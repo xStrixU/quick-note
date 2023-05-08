@@ -15,7 +15,7 @@ export const LoggedInUserDropdownMenu = ({
 }: LoggedInUserDropdownMenuProps) => (
 	<DropdownMenu>
 		<DropdownMenu.Button as={Fragment}>{children}</DropdownMenu.Button>
-		<DropdownMenu.Items above>
+		<DropdownMenu.Items above fullWidth>
 			<DropdownMenu.Item icon={<FiLogOut />} onClick={() => signOut()}>
 				Logout
 			</DropdownMenu.Item>

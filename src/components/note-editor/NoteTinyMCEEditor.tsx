@@ -53,7 +53,7 @@ export const NoteTinyMCEEditor = ({ note }: NoteTinyMCEEditorProps) => {
 			<Editor
 				onInit={(_evt, editor) => (editorRef.current = editor)}
 				initialValue={note.content}
-				tinymceScriptSrc="/scripts/tinymce.min.js"
+				tinymceScriptSrc="/tinymce/tinymce.min.js"
 				init={{
 					height: '100%',
 					menubar: false,
@@ -61,9 +61,9 @@ export const NoteTinyMCEEditor = ({ note }: NoteTinyMCEEditorProps) => {
 					placeholder: 'Write something here...',
 					toolbar_location: 'bottom',
 					plugins:
-						'lists advlist autolink charmap codesample emoticons image link media searchreplace table visualblocks visualchars wordcount',
+						'lists advlist autolink charmap codesample emoticons image link media searchreplace table visualblocks visualchars wordcount preview',
 					toolbar:
-						'undo redo | styles | emoticons charmap codesample | numlist bullist | link image media | table tabledelete | searchreplace visualblocks visualchars',
+						'undo redo | styles | emoticons charmap codesample | numlist bullist | link image media | table tabledelete | searchreplace visualblocks visualchars preview',
 				}}
 				onEditorChange={handleEditorChange}
 			/>

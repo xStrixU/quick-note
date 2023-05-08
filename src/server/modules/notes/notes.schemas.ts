@@ -9,6 +9,7 @@ export const noteSchema = z.object({
 
 export const noteDetailsSchema = noteSchema.extend({
 	content: z.string(),
+	isShared: z.boolean(),
 });
 
 export const getAllNotesOutputSchema = z.object({
@@ -25,6 +26,7 @@ export const updateNoteByIdSchema = z.object({
 	data: z.object({
 		title: z.string().nullable().optional(),
 		content: z.string().optional(),
+		isShared: z.boolean().optional(),
 	}),
 });
 

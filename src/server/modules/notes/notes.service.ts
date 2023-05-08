@@ -27,12 +27,9 @@ export const getAllNotes = async (user: User) => {
 	return { privateNotes, externalNotes };
 };
 
-export const getNoteById = async ({ id, user }: { id: string; user: User }) => {
+export const getNoteById = async (id: string) => {
 	const note = await prisma.note.findFirst({
-		where: {
-			id,
-			userId: user.id,
-		},
+		where: { id },
 	});
 
 	return note;
@@ -47,6 +44,7 @@ export const updateNoteById = async ({
 	data: Partial<{
 		title: string | null;
 		content: string;
+		isShared: boolean;
 	}>;
 	user: User;
 }) => {

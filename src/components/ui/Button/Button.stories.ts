@@ -34,3 +34,9 @@ export const FullWidth: Story = {
 		fullWidth: true,
 	},
 };
+
+export const Small: Story = {
+	args: {
+		size: 'small',
+	},
+};
