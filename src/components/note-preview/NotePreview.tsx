@@ -1,5 +1,7 @@
 import { NotePreviewContent } from './NotePreviewContent';
 
+import { DEFAULT_NOTE_TITLE } from '@/lib/constants';
+
 import type { NoteDetails } from '@/server/modules/notes/notes.schemas';
 
 type NotePreviewProps = Readonly<{
@@ -8,7 +10,9 @@ type NotePreviewProps = Readonly<{
 
 export const NotePreview = ({ note }: NotePreviewProps) => (
 	<div className="flex h-full flex-col">
-		<h1 className="mb-2 text-2xl font-bold">{note.title}</h1>
+		<h1 className="mb-2 text-2xl font-bold">
+			{note.title ?? DEFAULT_NOTE_TITLE}
+		</h1>
 		<NotePreviewContent note={note} />
 	</div>
 );
