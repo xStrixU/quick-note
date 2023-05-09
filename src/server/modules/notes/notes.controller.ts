@@ -2,13 +2,14 @@ import { TRPCError } from '@trpc/server';
 
 import {
 	createNote,
+	deleteNoteById,
 	getAllNotes,
 	getNoteById,
 	updateNoteById,
 } from './notes.service';
 
 import type { User } from '../users/users.schemas';
-import type { GetNoteByIdInput, UpdateNoteByIdInput } from './notes.schemas';
+import type { NoteByIdInput, UpdateNoteByIdInput } from './notes.schemas';
 
 export const createNoteHandler = async (user: User) => {
 	const note = await createNote(user);
@@ -26,7 +27,7 @@ export const getNoteByIdHandler = async ({
 	input: { id },
 	user,
 }: {
-	input: GetNoteByIdInput;
+	input: NoteByIdInput;
 	user: User;
 }) => {
 	const note = await getNoteById(id);
@@ -38,7 +39,7 @@ export const getNoteByIdHandler = async ({
 	return note;
 };
 
-export const getNotePreviewByIdHandler = async ({ id }: GetNoteByIdInput) => {
+export const getNotePreviewByIdHandler = async ({ id }: NoteByIdInput) => {
 	const note = await getNoteById(id);
 
 	if (!note?.isShared) {
@@ -62,4 +63,20 @@ export const updateNoteByIdHandler = async ({
 	}
 
 	return updatedNote;
+};
+
+export const deleteNoteByIdHandler = async ({
+	input: { id },
+	user,
+}: {
+	input: NoteByIdInput;
+	user: User;
+}) => {
+	const deletedNote = await deleteNoteById({ id, user });
+
+	if (!deletedNote) {
+		throw new TRPCError({ code: 'NOT_FOUND' });
+	}
+
+	return deletedNote;
 };

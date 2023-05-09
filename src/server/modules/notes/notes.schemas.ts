@@ -17,12 +17,11 @@ export const getAllNotesOutputSchema = z.object({
 	externalNotes: z.array(noteSchema),
 });
 
-export const getNoteByIdSchema = z.object({
+export const noteByIdSchema = z.object({
 	id: z.string(),
 });
 
-export const updateNoteByIdSchema = z.object({
-	id: z.string(),
+export const updateNoteByIdSchema = noteByIdSchema.extend({
 	data: z.object({
 		title: z.string().nullable().optional(),
 		content: z.string().optional(),
@@ -32,5 +31,5 @@ export const updateNoteByIdSchema = z.object({
 
 export type Note = TypeOf<typeof noteSchema>;
 export type NoteDetails = TypeOf<typeof noteDetailsSchema>;
-export type GetNoteByIdInput = TypeOf<typeof getNoteByIdSchema>;
+export type NoteByIdInput = TypeOf<typeof noteByIdSchema>;
 export type UpdateNoteByIdInput = TypeOf<typeof updateNoteByIdSchema>;

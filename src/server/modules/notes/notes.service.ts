@@ -65,3 +65,26 @@ export const updateNoteById = async ({
 
 	return updatedNote;
 };
+
+export const deleteNoteById = async ({
+	id,
+	user,
+}: {
+	id: string;
+	user: User;
+}) => {
+	const note = await getNoteById(id);
+
+	if (!note || note.userId !== user.id) {
+		return null;
+	}
+
+	await prisma.note.deleteMany({
+		where: {
+			id,
+			userId: user.id,
+		},
+	});
+
+	return note;
+};
