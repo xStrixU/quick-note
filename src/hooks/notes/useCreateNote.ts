@@ -7,15 +7,9 @@ interface CreateNoteArgs {
 }
 
 export const useCreateNote = () => {
-	const utils = trpc.useContext();
 	const createNoteMutation = trpc.notes.create.useMutation();
 
 	return ({ onSuccess }: CreateNoteArgs = {}) => {
-		createNoteMutation.mutate(undefined, {
-			onSuccess: note => {
-				void utils.notes.getAll.invalidate();
-				onSuccess?.(note);
-			},
-		});
+		createNoteMutation.mutate(undefined, { onSuccess });
 	};
 };

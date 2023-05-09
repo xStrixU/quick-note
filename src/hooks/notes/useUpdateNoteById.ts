@@ -9,18 +9,9 @@ interface UpdateNoteArgs {
 }
 
 export const useUpdateNoteById = () => {
-	const utils = trpc.useContext();
 	const updateNoteByIdMutation = trpc.notes.updateById.useMutation();
 
 	return ({ id, data, onSuccess }: UpdateNoteArgs) => {
-		updateNoteByIdMutation.mutate(
-			{ id, data },
-			{
-				onSuccess: note => {
-					void utils.notes.getById.refetch();
-					onSuccess?.(note);
-				},
-			}
-		);
+		updateNoteByIdMutation.mutate({ id, data }, { onSuccess });
 	};
 };
