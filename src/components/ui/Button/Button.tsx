@@ -1,3 +1,4 @@
+import { forwardRef } from 'react';
 import { twMerge } from 'tailwind-merge';
 
 import LoadingDots from '@/assets/svg/loading-dots.svg';
@@ -23,24 +24,32 @@ type ButtonProps = Readonly<{
 }> &
 	JSX.IntrinsicElements['button'];
 
-export const Button = ({
-	variant = 'fill',
-	size = 'medium',
-	isLoading,
-	fullWidth,
-	children,
-	...props
-}: ButtonProps) => (
-	<button
-		type="button"
-		className={twMerge(
-			'flex items-center justify-center rounded text-sm font-medium active:translate-y-px',
-			variants[variant],
-			sizes[size],
-			fullWidth && 'w-full'
-		)}
-		{...props}
-	>
-		{isLoading ? <LoadingDots /> : children}
-	</button>
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+	(
+		{
+			variant = 'fill',
+			size = 'medium',
+			isLoading,
+			fullWidth,
+			children,
+			...props
+		},
+		ref
+	) => (
+		<button
+			type="button"
+			ref={ref}
+			className={twMerge(
+				'flex items-center justify-center rounded text-sm font-medium active:translate-y-px',
+				variants[variant],
+				sizes[size],
+				fullWidth && 'w-full'
+			)}
+			{...props}
+		>
+			{isLoading ? <LoadingDots /> : children}
+		</button>
+	)
 );
+
+Button.displayName = 'Button';
