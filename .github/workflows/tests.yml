@@ -41,7 +41,7 @@ jobs:
         run: SKIP_ENV_VALIDATION=1 pnpm next:build
 
       - name: Build Storybook
-        run: pnpm storybook:build
+        run: SKIP_ENV_VALIDATION=1 pnpm storybook:build
 
       - name: Run tests
         run: pnpm test
