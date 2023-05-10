@@ -5,7 +5,7 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import FacebookProvider from 'next-auth/providers/facebook';
 import GoogleProvider from 'next-auth/providers/google';
 
-import { serverEnv } from '@/env/server.env';
+import { env } from '@/env.mjs';
 import { prisma } from '@/server/lib/prisma/prisma.instance';
 import { userSchema } from '@/server/modules/users/users.schemas';
 import { findUserBy } from '@/server/modules/users/users.service';
@@ -32,16 +32,16 @@ export const authOptions: NextAuthOptions = {
 	},
 	providers: [
 		GoogleProvider({
-			clientId: serverEnv.GOOGLE_CLIENT_ID,
-			clientSecret: serverEnv.GOOGLE_CLIENT_SECRET,
+			clientId: env.GOOGLE_CLIENT_ID,
+			clientSecret: env.GOOGLE_CLIENT_SECRET,
 		}),
 		AppleProvider({
-			clientId: serverEnv.APPLE_CLIENT_ID,
-			clientSecret: serverEnv.APPLE_CLIENT_SECRET,
+			clientId: env.APPLE_CLIENT_ID,
+			clientSecret: env.APPLE_CLIENT_SECRET,
 		}),
 		FacebookProvider({
-			clientId: serverEnv.FACEBOOK_CLIENT_ID,
-			clientSecret: serverEnv.FACEBOOK_CLIENT_SECRET,
+			clientId: env.FACEBOOK_CLIENT_ID,
+			clientSecret: env.FACEBOOK_CLIENT_SECRET,
 		}),
 		CredentialsProvider({
 			credentials: {

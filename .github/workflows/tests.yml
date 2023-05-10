@@ -35,13 +35,13 @@ jobs:
         run: pnpm install
 
       - name: Run linters
-        run: pnpm next:lint
+        run: SKIP_ENV_VALIDATION=1 pnpm next:lint
 
       - name: Build NextJS
         run: SKIP_ENV_VALIDATION=1 pnpm next:build
 
       - name: Build Storybook
-        run: pnpm storybook:build
+        run: SKIP_ENV_VALIDATION=1 pnpm storybook:build
 
       - name: Run tests
         run: pnpm test
