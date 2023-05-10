@@ -1,5 +1,7 @@
+await import('./src/env.mjs');
+
 /** @type {import('next').NextConfig} */
-const nextConfig = {
+const config = {
 	experimental: {
 		appDir: true,
 		typedRoutes: true,
@@ -22,4 +24,4 @@ const nextConfig = {
 	},
 };
 
-module.exports = nextConfig;
+export default config;
