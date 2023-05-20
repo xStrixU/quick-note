@@ -1,3 +1,4 @@
+import { toast } from 'react-hot-toast';
 import { IoEarth } from 'react-icons/io5';
 
 import { NoteLinkPreview } from './NoteLinkPreview';
@@ -19,11 +20,16 @@ export const ShareNoteToWeb = ({
 	note,
 	toggle,
 }: ShareNoteToWebProps) => {
-	const updateNoteById = useUpdateNoteById();
+	const { updateNoteById } = useUpdateNoteById();
 
 	const handleSwitchChange = () => {
 		toggle();
-		updateNoteById({ id: note.id, data: { isShared: !isChecked } });
+
+		try {
+			void updateNoteById({ id: note.id, data: { isShared: !isChecked } });
+		} catch {
+			toast.error('Failed to share note');
+		}
 	};
 
 	return (

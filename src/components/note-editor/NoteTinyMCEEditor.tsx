@@ -16,7 +16,7 @@ type NoteTinyMCEEditorProps = Readonly<{
 export const NoteTinyMCEEditor = ({ note }: NoteTinyMCEEditorProps) => {
 	const editorRef = useRef<TinyMCEEditor | null>(null);
 	const timeoutRef = useRef<NodeJS.Timeout | null>(null);
-	const updateNoteById = useUpdateNoteById();
+	const { updateNoteById } = useUpdateNoteById();
 
 	const saveNote = useCallback(() => {
 		const editor = editorRef?.current;
@@ -24,7 +24,7 @@ export const NoteTinyMCEEditor = ({ note }: NoteTinyMCEEditorProps) => {
 		if (editor) {
 			const content = editor.save();
 
-			updateNoteById({ id: note.id, data: { content } });
+			void updateNoteById({ id: note.id, data: { content } });
 		}
 	}, [note.id, updateNoteById]);
 
