@@ -1,7 +1,8 @@
+import { isNoteOwner } from './notes.utils';
+
 import { prisma } from '@/server/lib/prisma/prisma.instance';
 
 import type { User } from '../users/users.schemas';
-import type { Note } from '@prisma/client';
 
 export const createNote = async (user: User) => {
 	const note = await prisma.note.create({
@@ -22,7 +23,16 @@ export const getAllNotes = async (user: User) => {
 			createdAt: 'desc',
 		},
 	});
-	const externalNotes: Note[] = [];
+	const externalNotes = (
+		await prisma.noteMember.findMany({
+			where: {
+				userId: user.id,
+			},
+			include: {
+				note: true,
+			},
+		})
+	).map(({ note }) => note);
 
 	return { privateNotes, externalNotes };
 };
@@ -30,6 +40,9 @@ export const getAllNotes = async (user: User) => {
 export const getNoteById = async (id: string) => {
 	const note = await prisma.note.findFirst({
 		where: { id },
+		include: {
+			members: true,
+		},
 	});
 
 	return note;
@@ -75,7 +88,7 @@ export const deleteNoteById = async ({
 }) => {
 	const note = await getNoteById(id);
 
-	if (!note || note.userId !== user.id) {
+	if (!note || !isNoteOwner(user, note)) {
 		return null;
 	}
 
@@ -87,4 +100,51 @@ export const deleteNoteById = async ({
 	});
 
 	return note;
+};
+
+export const getNoteMembersById = async ({
+	id,
+	user,
+}: {
+	id: string;
+	user: User;
+}) => {
+	const note = await getNoteById(id);
+
+	if (!note || !isNoteOwner(user, note)) {
+		return null;
+	}
+
+	const members = await prisma.noteMember.findMany({
+		where: {
+			noteId: id,
+		},
+		include: {
+			user: true,
+		},
+	});
+
+	return members;
+};
+
+export const inviteToNoteById = async ({
+	id,
+	user,
+	userIds,
+}: {
+	id: string;
+	user: User;
+	userIds: string[];
+}) => {
+	const note = await getNoteById(id);
+
+	if (!note || !isNoteOwner(user, note)) {
+		return null;
+	}
+
+	await prisma.noteMember.createMany({
+		data: userIds.map(userId => ({ noteId: id, userId })),
+	});
+
+	return getNoteMembersById({ id, user });
 };

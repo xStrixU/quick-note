@@ -5,11 +5,18 @@ import {
 	deleteNoteById,
 	getAllNotes,
 	getNoteById,
+	getNoteMembersById,
+	inviteToNoteById,
 	updateNoteById,
 } from './notes.service';
+import { isNoteOwner, isNoteOwnerOrMember } from './notes.utils';
 
 import type { User } from '../users/users.schemas';
-import type { NoteByIdInput, UpdateNoteByIdInput } from './notes.schemas';
+import type {
+	InviteToNoteByIdInput,
+	NoteByIdInput,
+	UpdateNoteByIdInput,
+} from './notes.schemas';
 
 export const createNoteHandler = async (user: User) => {
 	const note = await createNote(user);
@@ -32,17 +39,27 @@ export const getNoteByIdHandler = async ({
 }) => {
 	const note = await getNoteById(id);
 
-	if (!note || note.userId !== user.id) {
+	if (!note || !isNoteOwnerOrMember(user, note)) {
 		throw new TRPCError({ code: 'NOT_FOUND' });
 	}
 
-	return note;
+	return { note, isOwner: isNoteOwner(user, note) };
 };
 
-export const getNotePreviewByIdHandler = async ({ id }: NoteByIdInput) => {
+export const getNotePreviewByIdHandler = async ({
+	input: { id },
+	user,
+}: {
+	input: NoteByIdInput;
+	user?: User;
+}) => {
 	const note = await getNoteById(id);
 
-	if (!note?.isShared) {
+	if (
+		!note ||
+		(!user && !note.isShared) ||
+		(user && !isNoteOwnerOrMember(user, note))
+	) {
 		throw new TRPCError({ code: 'NOT_FOUND' });
 	}
 
@@ -79,4 +96,36 @@ export const deleteNoteByIdHandler = async ({
 	}
 
 	return deletedNote;
+};
+
+export const getMembersByIdHandler = async ({
+	input: { id },
+	user,
+}: {
+	input: NoteByIdInput;
+	user: User;
+}) => {
+	const members = await getNoteMembersById({ id, user });
+
+	if (!members) {
+		throw new TRPCError({ code: 'NOT_FOUND' });
+	}
+
+	return members.map(({ user }) => user);
+};
+
+export const inviteToNoteByIdHandler = async ({
+	input: { id, userIds },
+	user,
+}: {
+	input: InviteToNoteByIdInput;
+	user: User;
+}) => {
+	const members = await inviteToNoteById({ id, user, userIds });
+
+	if (!members) {
+		throw new TRPCError({ code: 'NOT_FOUND' });
+	}
+
+	return members.map(({ user }) => user);
 };

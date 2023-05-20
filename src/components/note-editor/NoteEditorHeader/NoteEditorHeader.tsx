@@ -7,14 +7,15 @@ import type { NoteDetails } from '@/server/modules/notes/notes.schemas';
 
 type NoteEditorHeaderProps = Readonly<{
 	note: NoteDetails;
+	isOwner: boolean;
 }>;
 
-export const NoteEditorHeader = ({ note }: NoteEditorHeaderProps) => (
-	<header className="flex w-full items-center border-b border-neutral-300 px-2.5 py-1.5 dark:border-neutral-700">
+export const NoteEditorHeader = ({ note, isOwner }: NoteEditorHeaderProps) => (
+	<header className="flex h-10 w-full items-center border-b border-neutral-300 px-2.5 dark:border-neutral-700">
 		<GoBack />
 		<p className="ml-1.5 mr-auto truncate desktop:ml-0">
 			{note.title ?? DEFAULT_NOTE_TITLE}
 		</p>
-		<ShareNoteButton note={note} />
+		{isOwner && <ShareNoteButton note={note} />}
 	</header>
 );

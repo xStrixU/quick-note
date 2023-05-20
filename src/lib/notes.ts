@@ -24,7 +24,7 @@ export const getNoteById = cache(async (id: string) => {
 });
 
 export const getNotePreviewById = cache(async (id: string) => {
-	const caller = appRouter.createCaller({ session: null });
+	const caller = appRouter.createCaller(await createContext());
 	const note = await caller.notes.getPreviewById({ id });
 
 	return note;

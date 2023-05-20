@@ -22,9 +22,9 @@ const EditNotePage = async ({ params: { slug } }: EditNotePageProps) => {
 	}
 
 	try {
-		const note = await getNoteById(noteId);
+		const { note, isOwner } = await getNoteById(noteId);
 
-		return <NoteEditor note={note} />;
+		return <NoteEditor note={note} isOwner={isOwner} />;
 	} catch (err) {
 		notFound();
 	}
