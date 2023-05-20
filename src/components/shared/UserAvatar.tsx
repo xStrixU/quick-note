@@ -2,10 +2,8 @@ import Image from 'next/image';
 
 import { getInitials } from '@/lib/utils';
 
-import type { User } from '@/server/modules/users/users.schemas';
-
 type UserAvatarProps = Readonly<{
-	user: User;
+	user: { name: string | null; image: string | null };
 }>;
 
 export const UserAvatar = ({ user }: UserAvatarProps) => (

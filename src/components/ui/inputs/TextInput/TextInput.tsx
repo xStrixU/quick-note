@@ -34,7 +34,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
 		const id = useId();
 
 		return (
-			<div className="text-sm">
+			<div className="w-full text-sm">
 				{label && (
 					<label htmlFor={id} className="mb-8 text-foreground">
 						{label}

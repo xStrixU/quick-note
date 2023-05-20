@@ -7,7 +7,7 @@
 	"scripts": {
 		"prepare": "husky install",
 		"postinstall": "node ./scripts/tinymce.js && prisma generate",
-		"dev": "concurrently --kill-others-on-fail \"pnpm database:dev:start\" \"wait-on tcp:5432 && pnpm prisma:migrate:dev && pnpm prisma generate && pnpm next:dev\"",
+		"dev": "concurrently --kill-others-on-fail \"pnpm database:dev:start\" \"wait-on tcp:5432 && pnpm prisma:migrate:dev && pnpm next:dev\"",
 		"test": "vitest",
 		"next:dev": "next dev",
 		"next:build": "next build",
@@ -15,6 +15,7 @@
 		"next:lint": "next lint",
 		"next:lint:fix": "next lint --fix",
 		"prisma:migrate:dev": "dotenv -e .env.development.local -- prisma migrate dev",
+		"prisma:studio:dev": "dotenv -e .env.development.local -- prisma studio",
 		"database:dev:start": "docker compose up",
 		"storybook:dev": "storybook dev -p 6006",
 		"storybook:build": "storybook build"
@@ -33,6 +34,7 @@
 		"@trpc/server": "10.21.1",
 		"bcrypt": "5.1.0",
 		"client-only": "0.0.1",
+		"email-validator": "2.0.4",
 		"fs-extra": "11.1.1",
 		"next": "13.3.0",
 		"next-auth": "4.22.1",

@@ -2,14 +2,19 @@ import {
 	createNoteHandler,
 	deleteNoteByIdHandler,
 	getAllNotesHandler,
+	getMembersByIdHandler,
 	getNoteByIdHandler,
 	getNotePreviewByIdHandler,
+	inviteToNoteByIdHandler,
 	updateNoteByIdHandler,
 } from './notes.controller';
 import {
 	getAllNotesOutputSchema,
+	getNoteByIdOutputSchema,
+	inviteToNoteByIdSchema,
 	noteByIdSchema,
 	noteDetailsSchema,
+	noteMembersSchema,
 	noteSchema,
 	updateNoteByIdSchema,
 } from './notes.schemas';
@@ -25,14 +30,16 @@ export const notesRouter = router({
 		.query(({ ctx }) => getAllNotesHandler(ctx.session.user)),
 	getById: protectedProcecure
 		.input(noteByIdSchema)
-		.output(noteDetailsSchema)
+		.output(getNoteByIdOutputSchema)
 		.query(({ input, ctx }) =>
 			getNoteByIdHandler({ input, user: ctx.session.user })
 		),
 	getPreviewById: publicProcedure
 		.input(noteByIdSchema)
 		.output(noteDetailsSchema)
-		.query(({ input }) => getNotePreviewByIdHandler(input)),
+		.query(({ input, ctx }) =>
+			getNotePreviewByIdHandler({ input, user: ctx.session?.user })
+		),
 	updateById: protectedProcecure
 		.input(updateNoteByIdSchema)
 		.output(noteDetailsSchema)
@@ -44,5 +51,17 @@ export const notesRouter = router({
 		.output(noteDetailsSchema)
 		.mutation(({ input, ctx }) =>
 			deleteNoteByIdHandler({ input, user: ctx.session.user })
+		),
+	getMembersById: protectedProcecure
+		.input(noteByIdSchema)
+		.output(noteMembersSchema)
+		.query(({ input, ctx }) =>
+			getMembersByIdHandler({ input, user: ctx.session.user })
+		),
+	inviteById: protectedProcecure
+		.input(inviteToNoteByIdSchema)
+		.output(noteMembersSchema)
+		.mutation(({ input, ctx }) =>
+			inviteToNoteByIdHandler({ input, user: ctx.session.user })
 		),
 });

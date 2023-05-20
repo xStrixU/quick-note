@@ -12,6 +12,11 @@ export const userSchema = z.object({
 	image: z.string().nullable(),
 });
 
+export const simpleUserSchema = userSchema.omit({
+	email: true,
+	emailVerified: true,
+});
+
 export const createUserSchema = z.object({
 	fullName: z.string().nonempty('Full name is required'),
 	email: z.string().email('Email must be a valid email'),
@@ -20,5 +25,11 @@ export const createUserSchema = z.object({
 		.regex(PASSWORD_REGEX, 'Password must be at least 5 characters long'),
 });
 
+export const findUsersSchema = z.object({
+	search: z.string().nonempty(),
+});
+
 export type User = TypeOf<typeof userSchema>;
+export type SimpleUser = TypeOf<typeof simpleUserSchema>;
 export type CreateUserInput = TypeOf<typeof createUserSchema>;
+export type FindUsersInput = TypeOf<typeof findUsersSchema>;

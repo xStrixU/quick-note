@@ -1,11 +1,11 @@
 import { TRPCError } from '@trpc/server';
 
-import { createUser } from './users.service';
+import { createUser, findUsers } from './users.service';
 
 import { PrismaErrorCode } from '@/server/lib/prisma/prisma.types';
 import { isPrismaError } from '@/server/lib/prisma/prisma.utils';
 
-import type { CreateUserInput } from './users.schemas';
+import type { CreateUserInput, FindUsersInput, User } from './users.schemas';
 
 export const createUserHandler = async (input: CreateUserInput) => {
 	try {
@@ -22,4 +22,17 @@ export const createUserHandler = async (input: CreateUserInput) => {
 
 		throw err;
 	}
+};
+
+export const findUsersHandler = async ({
+	input: { search },
+	user,
+}: {
+	input: FindUsersInput;
+	user: User;
+}) => {
+	const users = await findUsers(search);
+	const filteredUsers = users.filter(({ id }) => user.id !== id);
+
+	return filteredUsers;
 };
