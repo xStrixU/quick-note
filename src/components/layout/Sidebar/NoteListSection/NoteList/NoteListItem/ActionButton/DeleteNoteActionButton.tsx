@@ -1,4 +1,5 @@
 import { useParams, useRouter } from 'next/navigation';
+import { toast } from 'react-hot-toast';
 import { BsTrash } from 'react-icons/bs';
 
 import { NoteListItemActionButton } from './NoteListItemActionButton';
@@ -18,25 +19,26 @@ export const DeleteNoteActionButton = ({
 }: DeleteNoteActionButtonProps) => {
 	const params = useParams();
 	const router = useRouter();
-	const deleteNoteById = useDeleteNoteById();
+	const { deleteNoteById } = useDeleteNoteById();
 
-	const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
+	const handleClick = async (e: MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault();
 
 		const confirmed = confirm('Are you sure you want to delete this note?');
 
 		if (!confirmed) return;
 
-		deleteNoteById({
-			id: note.id,
-			onSuccess: () => {
-				router.refresh();
+		try {
+			await deleteNoteById(note.id);
 
-				if (params.slug === note.id) {
-					router.replace('/');
-				}
-			},
-		});
+			router.refresh();
+
+			if (params.slug === note.id) {
+				router.replace('/');
+			}
+		} catch {
+			toast.error('Failed to delete note');
+		}
 	};
 
 	return (

@@ -1,18 +1,21 @@
 import { useRouter } from 'next/navigation';
+import { toast } from 'react-hot-toast';
 import { MdAdd } from 'react-icons/md';
 
 import { useCreateNote } from '@/hooks/notes/useCreateNote';
 
 export const CreateNoteButton = () => {
 	const router = useRouter();
-	const createNote = useCreateNote();
+	const { createNote } = useCreateNote();
 
-	const handleClick = () => {
-		createNote({
-			onSuccess: () => {
-				router.refresh();
-			},
-		});
+	const handleClick = async () => {
+		try {
+			await createNote();
+
+			router.refresh();
+		} catch {
+			toast.error('Failed to create note');
+		}
 	};
 
 	return (

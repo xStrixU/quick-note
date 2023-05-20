@@ -1,6 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import { toast } from 'react-hot-toast';
 import { useDebouncedCallback } from 'use-debounce';
 
 import { useUpdateNoteById } from '@/hooks/notes/useUpdateNoteById';
@@ -14,14 +15,19 @@ type NoteTitleEditorProps = Readonly<{
 
 export const NoteTitleEditor = ({ note }: NoteTitleEditorProps) => {
 	const router = useRouter();
-	const updateNoteById = useUpdateNoteById();
+	const { updateNoteById } = useUpdateNoteById();
 
-	const debounced = useDebouncedCallback((value: string) => {
-		updateNoteById({
-			id: note.id,
-			data: { title: value || null },
-			onSuccess: () => router.refresh(),
-		});
+	const debounced = useDebouncedCallback(async (value: string) => {
+		try {
+			await updateNoteById({
+				id: note.id,
+				data: { title: value || null },
+			});
+
+			router.refresh();
+		} catch {
+			toast.error('Failed to update note title');
+		}
 	}, 500);
 
 	return (
