@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 
 import { NoteEditor } from '@/components/note-editor/NoteEditor';
+import { NotePreview } from '@/components/note-preview/NotePreview';
 
 import { getNoteById } from '@/lib/notes';
 
@@ -22,9 +23,17 @@ const EditNotePage = async ({ params: { slug } }: EditNotePageProps) => {
 	}
 
 	try {
-		const { note, isOwner } = await getNoteById(noteId);
+		const { note, member } = await getNoteById(noteId);
 
-		return <NoteEditor note={note} isOwner={isOwner} />;
+		if (member) {
+			return member.permission === 'EDIT' ? (
+				<NoteEditor note={note} />
+			) : (
+				<NotePreview note={note} />
+			);
+		}
+
+		return <NoteEditor note={note} isOwner />;
 	} catch (err) {
 		notFound();
 	}

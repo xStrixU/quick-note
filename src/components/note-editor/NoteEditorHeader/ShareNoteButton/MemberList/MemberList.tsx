@@ -20,7 +20,14 @@ export const MemberList = ({ note }: MemberListProps) => {
 			<p className="text-sm font-medium">Members</p>
 			<ul className="app-scrollbar max-h-40 overflow-auto">
 				{data?.length ? (
-					data.map(member => <MemberListItem key={member.id} member={member} />)
+					data.map(({ member, permission }) => (
+						<MemberListItem
+							key={member.id}
+							note={note}
+							member={member}
+							permission={permission}
+						/>
+					))
 				) : (
 					<p className="text-sm">There are no members</p>
 				)}

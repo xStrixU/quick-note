@@ -1,22 +1,27 @@
 import {
 	createNoteHandler,
 	deleteNoteByIdHandler,
+	deleteNoteMemberHandler,
 	getAllNotesHandler,
 	getMembersByIdHandler,
 	getNoteByIdHandler,
 	getNotePreviewByIdHandler,
 	inviteToNoteByIdHandler,
 	updateNoteByIdHandler,
+	updateNoteMemberHandler,
 } from './notes.controller';
 import {
+	deleteNoteMemberSchema,
 	getAllNotesOutputSchema,
 	getNoteByIdOutputSchema,
 	inviteToNoteByIdSchema,
 	noteByIdSchema,
 	noteDetailsSchema,
+	noteMemberSchema,
 	noteMembersSchema,
 	noteSchema,
 	updateNoteByIdSchema,
+	updateNoteMemberSchema,
 } from './notes.schemas';
 
 import { protectedProcecure, publicProcedure, router } from '@/server/trpc';
@@ -63,5 +68,17 @@ export const notesRouter = router({
 		.output(noteMembersSchema)
 		.mutation(({ input, ctx }) =>
 			inviteToNoteByIdHandler({ input, user: ctx.session.user })
+		),
+	deleteMember: protectedProcecure
+		.input(deleteNoteMemberSchema)
+		.output(noteMemberSchema)
+		.mutation(({ input, ctx }) =>
+			deleteNoteMemberHandler({ input, user: ctx.session.user })
+		),
+	updateMember: protectedProcecure
+		.input(updateNoteMemberSchema)
+		.output(noteMemberSchema)
+		.mutation(({ input, ctx }) =>
+			updateNoteMemberHandler({ input, user: ctx.session.user })
 		),
 });

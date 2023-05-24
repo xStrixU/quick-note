@@ -1,8 +1,9 @@
-import { isNoteOwner } from './notes.utils';
+import { isNoteOwner, isNoteOwnerOrMember } from './notes.utils';
 
 import { prisma } from '@/server/lib/prisma/prisma.instance';
 
 import type { User } from '../users/users.schemas';
+import type { NoteMemberPermission } from '@prisma/client';
 
 export const createNote = async (user: User) => {
 	const note = await prisma.note.create({
@@ -61,11 +62,9 @@ export const updateNoteById = async ({
 	}>;
 	user: User;
 }) => {
-	const note = await prisma.note.findFirst({
-		where: { id, userId: user.id },
-	});
+	const note = await getNoteById(id);
 
-	if (!note) {
+	if (!note || !isNoteOwnerOrMember(user, note, 'EDIT')) {
 		return null;
 	}
 
@@ -100,6 +99,26 @@ export const deleteNoteById = async ({
 	});
 
 	return note;
+};
+
+export const getNoteMemberById = async ({
+	id,
+	user,
+}: {
+	id: string;
+	user: User;
+}) => {
+	const member = await prisma.noteMember.findFirst({
+		where: {
+			noteId: id,
+			userId: user.id,
+		},
+		include: {
+			user: true,
+		},
+	});
+
+	return member;
 };
 
 export const getNoteMembersById = async ({
@@ -147,4 +166,67 @@ export const inviteToNoteById = async ({
 	});
 
 	return getNoteMembersById({ id, user });
+};
+
+export const deleteNoteMember = async ({
+	id,
+	memberId,
+	user,
+}: {
+	id: string;
+	memberId: string;
+	user: User;
+}) => {
+	const note = await getNoteById(id);
+
+	if (!note || !isNoteOwner(user, note)) {
+		return null;
+	}
+
+	const deletedMember = await prisma.noteMember.delete({
+		where: {
+			userId_noteId: {
+				userId: memberId,
+				noteId: id,
+			},
+		},
+		include: {
+			user: true,
+		},
+	});
+
+	return deletedMember;
+};
+
+export const updateNoteMember = async ({
+	noteId,
+	memberId,
+	data,
+	user,
+}: {
+	noteId: string;
+	memberId: string;
+	data: Partial<{ permission: NoteMemberPermission }>;
+	user: User;
+}) => {
+	const note = await getNoteById(noteId);
+
+	if (!note || !isNoteOwner(user, note)) {
+		return null;
+	}
+
+	const updatedNoteMember = await prisma.noteMember.update({
+		where: {
+			userId_noteId: {
+				userId: memberId,
+				noteId,
+			},
+		},
+		data,
+		include: {
+			user: true,
+		},
+	});
+
+	return updatedNoteMember;
 };

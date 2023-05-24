@@ -1,3 +1,4 @@
+import { NoteMemberPermission } from '@prisma/client';
 import { z } from 'zod';
 
 import { simpleUserSchema } from '../users/users.schemas';
@@ -15,7 +16,12 @@ export const noteDetailsSchema = noteSchema.extend({
 	isShared: z.boolean(),
 });
 
-export const noteMembersSchema = z.array(simpleUserSchema);
+export const noteMemberSchema = z.object({
+	member: simpleUserSchema,
+	permission: z.nativeEnum(NoteMemberPermission),
+});
+
+export const noteMembersSchema = z.array(noteMemberSchema);
 
 export const getAllNotesOutputSchema = z.object({
 	privateNotes: z.array(noteSchema),
@@ -28,7 +34,7 @@ export const noteByIdSchema = z.object({
 
 export const getNoteByIdOutputSchema = z.object({
 	note: noteDetailsSchema,
-	isOwner: z.boolean(),
+	member: noteMemberSchema.optional(),
 });
 
 export const updateNoteByIdSchema = noteByIdSchema.extend({
@@ -43,8 +49,22 @@ export const inviteToNoteByIdSchema = noteByIdSchema.extend({
 	userIds: z.array(z.string()),
 });
 
+export const deleteNoteMemberSchema = noteByIdSchema.extend({
+	memberId: z.string(),
+});
+
+export const updateNoteMemberSchema = noteByIdSchema.extend({
+	memberId: z.string(),
+	data: z.object({
+		permission: z.nativeEnum(NoteMemberPermission).optional(),
+	}),
+});
+
 export type Note = TypeOf<typeof noteSchema>;
+export type NoteMember = TypeOf<typeof noteMemberSchema>;
 export type NoteDetails = TypeOf<typeof noteDetailsSchema>;
 export type NoteByIdInput = TypeOf<typeof noteByIdSchema>;
 export type UpdateNoteByIdInput = TypeOf<typeof updateNoteByIdSchema>;
 export type InviteToNoteByIdInput = TypeOf<typeof inviteToNoteByIdSchema>;
+export type DeleteNoteMemberInput = TypeOf<typeof deleteNoteMemberSchema>;
+export type UpdateNoteMemberInput = TypeOf<typeof updateNoteMemberSchema>;
