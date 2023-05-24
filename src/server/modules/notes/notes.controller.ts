@@ -1,21 +1,27 @@
 import { TRPCError } from '@trpc/server';
 
+import { mapPrismaNoteMemberToNoteMember } from './notes.mapper';
 import {
 	createNote,
 	deleteNoteById,
+	deleteNoteMember,
 	getAllNotes,
 	getNoteById,
+	getNoteMemberById,
 	getNoteMembersById,
 	inviteToNoteById,
 	updateNoteById,
+	updateNoteMember,
 } from './notes.service';
-import { isNoteOwner, isNoteOwnerOrMember } from './notes.utils';
+import { isNoteMember, isNoteOwnerOrMember } from './notes.utils';
 
 import type { User } from '../users/users.schemas';
 import type {
+	DeleteNoteMemberInput,
 	InviteToNoteByIdInput,
 	NoteByIdInput,
 	UpdateNoteByIdInput,
+	UpdateNoteMemberInput,
 } from './notes.schemas';
 
 export const createNoteHandler = async (user: User) => {
@@ -43,7 +49,16 @@ export const getNoteByIdHandler = async ({
 		throw new TRPCError({ code: 'NOT_FOUND' });
 	}
 
-	return { note, isOwner: isNoteOwner(user, note) };
+	if (!isNoteMember(user, note)) {
+		return { note };
+	}
+
+	const member = await getNoteMemberById({ id, user });
+
+	return {
+		note,
+		...(member && { member: mapPrismaNoteMemberToNoteMember(member) }),
+	};
 };
 
 export const getNotePreviewByIdHandler = async ({
@@ -111,7 +126,7 @@ export const getMembersByIdHandler = async ({
 		throw new TRPCError({ code: 'NOT_FOUND' });
 	}
 
-	return members.map(({ user }) => user);
+	return members.map(mapPrismaNoteMemberToNoteMember);
 };
 
 export const inviteToNoteByIdHandler = async ({
@@ -127,5 +142,42 @@ export const inviteToNoteByIdHandler = async ({
 		throw new TRPCError({ code: 'NOT_FOUND' });
 	}
 
-	return members.map(({ user }) => user);
+	return members.map(mapPrismaNoteMemberToNoteMember);
+};
+
+export const deleteNoteMemberHandler = async ({
+	input: { id, memberId },
+	user,
+}: {
+	input: DeleteNoteMemberInput;
+	user: User;
+}) => {
+	const deletedMember = await deleteNoteMember({ id, memberId, user });
+
+	if (!deletedMember) {
+		throw new TRPCError({ code: 'NOT_FOUND' });
+	}
+
+	return mapPrismaNoteMemberToNoteMember(deletedMember);
+};
+
+export const updateNoteMemberHandler = async ({
+	input: { id, memberId, data },
+	user,
+}: {
+	input: UpdateNoteMemberInput;
+	user: User;
+}) => {
+	const updatedNoteMember = await updateNoteMember({
+		noteId: id,
+		memberId,
+		data,
+		user,
+	});
+
+	if (!updatedNoteMember) {
+		throw new TRPCError({ code: 'NOT_FOUND' });
+	}
+
+	return mapPrismaNoteMemberToNoteMember(updatedNoteMember);
 };

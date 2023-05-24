@@ -6,10 +6,10 @@ import type { NoteDetails } from '@/server/modules/notes/notes.schemas';
 
 type NoteEditorProps = Readonly<{
 	note: NoteDetails;
-	isOwner: boolean;
+	isOwner?: boolean;
 }>;
 
-export const NoteEditor = ({ note, isOwner }: NoteEditorProps) => (
+export const NoteEditor = ({ note, isOwner = false }: NoteEditorProps) => (
 	<div className="flex h-full flex-col">
 		<NoteEditorHeader note={note} isOwner={isOwner} />
 		<NoteTitleEditor note={note} />
