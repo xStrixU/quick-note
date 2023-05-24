@@ -39,7 +39,7 @@ export const ShareNoteDropdownMenu = ({
 	const filteredFoundUsers = foundUsers?.filter(
 		foundUser =>
 			!selectedUsers.find(selectedUser => selectedUser.id === foundUser.id) &&
-			!members?.find(member => member.id === foundUser.id)
+			!members?.find(({ member }) => member.id === foundUser.id)
 	);
 
 	return (
