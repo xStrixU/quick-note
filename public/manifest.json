@@ -1,0 +1,13 @@
+{
+	"name": "QuickNote",
+	"short_name": "QuickNote",
+	"display": "standalone",
+	"start_url": "/",
+	"icons": [
+		{
+			"src": "/icon.png",
+			"sizes": "256x256",
+			"type": "image/png"
+		}
+	]
+}

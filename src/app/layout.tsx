@@ -13,6 +13,7 @@ export const metadata = {
 		template: `%s | ${APP_NAME}`,
 	},
 	description: `${APP_NAME} - Keep your thoughts organized and never miss an idea!`,
+	manifest: '/manifest.json',
 	viewport: {
 		width: 'device-width',
 		initialScale: 1,
