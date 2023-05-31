@@ -36,6 +36,7 @@ const EditNotePage = async ({ params: { slug } }: EditNotePageProps) => {
 		return <NoteEditor note={note} isOwner />;
 	} catch (err) {
 		console.log('NotFound Error!');
+		console.log({ noteId });
 		console.log({ err });
 		notFound();
 	}
