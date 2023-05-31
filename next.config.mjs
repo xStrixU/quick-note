@@ -1,9 +1,15 @@
+import nextPWA from 'next-pwa';
+
 await import('./src/env.mjs');
 
+const withPWA = nextPWA({
+	dest: 'public',
+	disable: process.env.NODE_ENV === 'development',
+});
+
 /** @type {import('next').NextConfig} */
-const config = {
+const nextConfig = {
 	experimental: {
-		appDir: true,
 		typedRoutes: true,
 	},
 	images: {
@@ -24,4 +30,4 @@ const config = {
 	},
 };
 
-export default config;
+export default withPWA(nextConfig);
