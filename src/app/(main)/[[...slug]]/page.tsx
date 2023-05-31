@@ -14,7 +14,7 @@ type EditNotePageProps = Readonly<{
 const EditNotePage = async ({ params: { slug } }: EditNotePageProps) => {
 	const noteId = slug?.[0];
 
-	if (!noteId) {
+	if (!noteId || noteId === 'index') {
 		return (
 			<div className="flex h-full items-center justify-center text-xl text-foreground">
 				You have not selected any note!
@@ -34,10 +34,7 @@ const EditNotePage = async ({ params: { slug } }: EditNotePageProps) => {
 		}
 
 		return <NoteEditor note={note} isOwner />;
-	} catch (err) {
-		console.log('NotFound Error!');
-		console.log({ noteId });
-		console.log({ err });
+	} catch {
 		notFound();
 	}
 };
