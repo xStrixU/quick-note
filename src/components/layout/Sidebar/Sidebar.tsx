@@ -9,7 +9,7 @@ export const Sidebar = async () => {
 		return (
 			<SidebarAside privateNotes={privateNotes} externalNotes={externalNotes} />
 		);
-	} catch (err) {
+	} catch {
 		return null;
 	}
 };
