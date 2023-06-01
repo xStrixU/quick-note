@@ -13,23 +13,26 @@ export const useSignUpForm = ({
 	onUnknownError,
 }: useSignUpFormActions) => {
 	const { mutate, isLoading } = trpc.users.create.useMutation();
-	const { setError, ...rest } = useZodForm(signUpFormSchema, data => {
-		mutate(data, {
-			onSuccess,
-			onError: err => {
-				if (isTRPCClientError(err)) {
-					const { data, message } = err;
+	const { setError, ...rest } = useZodForm({
+		schema: signUpFormSchema,
+		handler: data => {
+			mutate(data, {
+				onSuccess,
+				onError: err => {
+					if (isTRPCClientError(err)) {
+						const { data, message } = err;
 
-					switch (data?.code) {
-						case 'CONFLICT':
-							setError('email', { message });
-							break;
-						default:
-							onUnknownError(message);
+						switch (data?.code) {
+							case 'CONFLICT':
+								setError('email', { message });
+								break;
+							default:
+								onUnknownError(message);
+						}
 					}
-				}
-			},
-		});
+				},
+			});
+		},
 	});
 
 	return { isLoading, setError, ...rest };

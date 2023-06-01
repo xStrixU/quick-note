@@ -15,35 +15,38 @@ export const useSignInForm = ({
 	onUnknownError,
 }: UseSignInFormActions) => {
 	const [isLoading, setIsLoading] = useState(false);
-	const { setError, ...rest } = useZodForm(signInFormSchema, async data => {
-		setIsLoading(true);
+	const { setError, ...rest } = useZodForm({
+		schema: signInFormSchema,
+		handler: async data => {
+			setIsLoading(true);
 
-		const response = await signIn('credentials', {
-			redirect: false,
-			...data,
-		});
+			const response = await signIn('credentials', {
+				redirect: false,
+				...data,
+			});
 
-		setIsLoading(false);
+			setIsLoading(false);
 
-		if (!response?.error) {
-			onSuccess();
-		} else {
-			const { error } = response;
+			if (!response?.error) {
+				onSuccess();
+			} else {
+				const { error } = response;
 
-			switch (error) {
-				case 'CredentialsSignin': {
-					const message = 'Invalid email or password';
+				switch (error) {
+					case 'CredentialsSignin': {
+						const message = 'Invalid email or password';
 
-					setError('email', { message });
-					setError('password', { message });
-					break;
+						setError('email', { message });
+						setError('password', { message });
+						break;
+					}
+					default:
+						if (error === 'OAuthAccountNotLinked') return;
+
+						onUnknownError(error);
 				}
-				default:
-					if (error === 'OAuthAccountNotLinked') return;
-
-					onUnknownError(error);
 			}
-		}
+		},
 	});
 
 	return { isLoading, setError, ...rest };
