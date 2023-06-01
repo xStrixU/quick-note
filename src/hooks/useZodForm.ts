@@ -4,29 +4,25 @@ import { useForm } from 'react-hook-form';
 import type { SubmitHandler, UseFormProps } from 'react-hook-form';
 import type { Schema, TypeOf } from 'zod';
 
-export const useZodForm = <
-	TSchema extends Schema,
-	T extends UseFormProps<TypeOf<TSchema>> | SubmitHandler<TypeOf<TSchema>>
->(
-	schema: TSchema,
-	...args: T extends SubmitHandler<TypeOf<TSchema>>
-		? [T]
-		: [T, SubmitHandler<TypeOf<TSchema>>]
-) => {
-	const props = typeof args[0] === 'object' ? args[0] : {};
-	const submitHandler = typeof args[0] !== 'object' ? args[0] : args[1];
-	const defaultSubmitHandler = () => {
-		throw new Error('Default submit handler');
-	};
+interface UseZodFormArgs<TSchema extends Schema>
+	extends UseFormProps<TypeOf<TSchema>> {
+	schema: TSchema;
+	handler: SubmitHandler<TypeOf<TSchema>>;
+}
 
+export const useZodForm = <TSchema extends Schema>({
+	schema,
+	handler,
+	...options
+}: UseZodFormArgs<TSchema>) => {
 	const { handleSubmit, ...rest } = useForm<TypeOf<TSchema>>({
 		reValidateMode: 'onSubmit',
 		resolver: zodResolver(schema),
-		...props,
+		...options,
 	});
 
 	return {
-		onSubmit: handleSubmit(submitHandler ?? defaultSubmitHandler),
+		onSubmit: handleSubmit(handler),
 		...rest,
 	};
 };
