@@ -2,6 +2,7 @@
 
 import { SessionProvider } from 'next-auth/react';
 
+import { ThemeProvider } from './ThemeProvider';
 import { TrpcProvider } from './TrpcProvider';
 
 import type { ReactNode } from 'react';
@@ -12,6 +13,8 @@ type AppProvidersProps = Readonly<{
 
 export const AppProviders = ({ children }: AppProvidersProps) => (
 	<SessionProvider>
-		<TrpcProvider>{children}</TrpcProvider>
+		<TrpcProvider>
+			<ThemeProvider>{children}</ThemeProvider>
+		</TrpcProvider>
 	</SessionProvider>
 );

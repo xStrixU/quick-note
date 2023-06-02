@@ -19,7 +19,7 @@ export const MemberListItem = ({
 	permission,
 }: MemberListItemProps) => (
 	<li>
-		<div className="flex cursor-pointer items-center gap-2 p-2 hover:bg-gray-200">
+		<div className="flex cursor-pointer items-center gap-2 p-2 hover:bg-gray-200 dark:hover:bg-neutral-800">
 			<UserAvatar user={member} />
 			<span className="mr-auto truncate text-sm">{member.name}</span>
 			<ManageMemberButton note={note} member={member} permission={permission} />

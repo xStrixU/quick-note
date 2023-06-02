@@ -14,7 +14,7 @@ export const SelectedUser = ({ user }: SelectedUserProps) => {
 	return (
 		<button
 			onClick={() => dispatchSelectedUsers({ type: 'remove', userId: user.id })}
-			className="flex h-5 shrink-0 items-center rounded bg-neutral-300 p-1 text-sm"
+			className="flex h-5 shrink-0 items-center rounded bg-neutral-300 p-1 text-sm dark:bg-neutral-700"
 		>
 			{user.name}
 			<IoClose className="hover:fill-icon hover:text-brand-default" />

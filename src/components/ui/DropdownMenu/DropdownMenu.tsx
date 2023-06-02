@@ -13,7 +13,13 @@ type DropdownMenuProps = Readonly<{
 
 export const DropdownMenu = ({ fullWidth, children }: DropdownMenuProps) => {
 	return (
-		<Menu as="div" className={twMerge('relative', fullWidth && 'w-full')}>
+		<Menu
+			as="div"
+			className={twMerge(
+				'relative text-neutral-800 dark:text-neutral-300',
+				fullWidth && 'w-full'
+			)}
+		>
 			{children}
 		</Menu>
 	);

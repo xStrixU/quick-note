@@ -23,7 +23,7 @@ export const FoundUserList = ({ users, clearInput }: FoundUserListProps) => {
 				<li key={user.id}>
 					<div
 						onClick={handleUserClick(user)}
-						className="bg-neutral-background-selected flex h-12 cursor-pointer items-center rounded-sm px-3.5 hover:bg-gray-200"
+						className="bg-neutral-background-selected flex h-12 cursor-pointer items-center rounded-sm px-3.5 hover:bg-gray-200 dark:hover:bg-neutral-800"
 					>
 						<UserAvatar user={user} />
 						<p className="ml-2 truncate font-semibold">{user.name}</p>

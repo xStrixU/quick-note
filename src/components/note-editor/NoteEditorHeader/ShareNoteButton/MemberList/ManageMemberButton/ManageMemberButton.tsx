@@ -27,7 +27,7 @@ export const ManageMemberButton = ({
 			member={member}
 			permission={permission}
 		>
-			<button className="flex items-center gap-0.5 rounded py-1 pl-1.5 pr-0.5 text-xs text-neutral-500 hover:bg-gray-300">
+			<button className="flex items-center gap-0.5 rounded py-1 pl-1.5 pr-0.5 text-xs text-neutral-500 hover:bg-gray-300 dark:text-neutral-400 dark:hover:bg-neutral-700">
 				{permissionLabel}
 				<MdExpandMore size={18} />
 			</button>

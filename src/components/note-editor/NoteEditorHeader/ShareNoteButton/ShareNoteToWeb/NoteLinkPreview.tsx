@@ -23,11 +23,11 @@ export const NoteLinkPreview = ({ note }: NoteLinkPreviewProps) => {
 	};
 
 	return (
-		<div className="mt-1 flex rounded border border-gray-300 text-sm">
+		<div className="mt-1 flex rounded border border-gray-300 text-sm dark:border-gray-500">
 			<input
 				type="text"
 				disabled
-				className="min-w-0 grow bg-gray-200 p-1"
+				className="min-w-0 grow bg-gray-200 p-1 dark:bg-neutral-800"
 				value={value}
 			/>
 			<button
