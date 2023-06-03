@@ -1,4 +1,4 @@
-import { NotePreviewContent } from './NotePreviewContent';
+import { NotePreviewContent } from './NotePreviewContent/NotePreviewContent';
 
 import { DEFAULT_NOTE_TITLE } from '@/lib/constants';
 
