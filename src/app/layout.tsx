@@ -7,6 +7,8 @@ import type { ReactNode } from 'react';
 
 import '@/assets/styles/globals.css';
 
+import '@total-typescript/ts-reset';
+
 export const metadata = {
 	title: {
 		default: APP_NAME,

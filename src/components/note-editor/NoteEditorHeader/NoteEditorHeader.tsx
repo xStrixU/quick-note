@@ -13,7 +13,7 @@ type NoteEditorHeaderProps = Readonly<{
 export const NoteEditorHeader = ({ note, isOwner }: NoteEditorHeaderProps) => (
 	<header className="flex h-10 w-full items-center border-b border-neutral-300 px-2.5 dark:border-neutral-700">
 		<GoBack />
-		<p className="ml-1.5 mr-auto truncate desktop:ml-0">
+		<p className="ml-1.5 mr-auto truncate text-neutral-800 dark:text-neutral-300 desktop:ml-0">
 			{note.title ?? DEFAULT_NOTE_TITLE}
 		</p>
 		{isOwner && <ShareNoteButton note={note} />}

@@ -1,4 +1,4 @@
-import { noteMemberPermissionLabels } from '@/lib/noteMember';
+import { noteMemberPermissionLabels } from '@/lib/noteMembers';
 
 import type { NoteMemberPermission } from '@prisma/client';
 

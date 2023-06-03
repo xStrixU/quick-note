@@ -4,6 +4,7 @@ import { Editor } from '@tinymce/tinymce-react';
 import { useCallback, useEffect, useRef } from 'react';
 
 import { useUpdateNoteById } from '@/hooks/notes/useUpdateNoteById';
+import { useThemeContext } from '@/providers/ThemeProvider';
 
 import type { Editor as TinyMCEEditor } from 'tinymce';
 
@@ -17,6 +18,9 @@ export const NoteTinyMCEEditor = ({ note }: NoteTinyMCEEditorProps) => {
 	const editorRef = useRef<TinyMCEEditor | null>(null);
 	const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 	const { updateNoteById } = useUpdateNoteById();
+	const { theme } = useThemeContext();
+
+	const isDarkTheme = theme === 'dark';
 
 	const saveNote = useCallback(() => {
 		const editor = editorRef?.current;
@@ -64,6 +68,10 @@ export const NoteTinyMCEEditor = ({ note }: NoteTinyMCEEditorProps) => {
 						'lists advlist autolink charmap codesample emoticons image link media searchreplace table visualblocks visualchars wordcount preview',
 					toolbar:
 						'undo redo | styles | emoticons charmap codesample | numlist bullist | link image media | table tabledelete | searchreplace visualblocks visualchars preview',
+					...(isDarkTheme && {
+						content_css: 'dark',
+						skin: 'oxide-dark',
+					}),
 				}}
 				onEditorChange={handleEditorChange}
 			/>

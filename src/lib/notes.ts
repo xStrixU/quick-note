@@ -1,11 +1,7 @@
 import { cache } from 'react';
 
-import { minifyHTML } from './utils';
-
 import { appRouter } from '@/server/app.router';
 import { createContext } from '@/server/context';
-
-import type { NoteDetails } from '@/server/modules/notes/notes.schemas';
 
 import 'server-only';
 
@@ -29,16 +25,3 @@ export const getNotePreviewById = cache(async (id: string) => {
 
 	return note;
 });
-
-export const createNotePreviewIFrameSrcDoc = (note: NoteDetails) =>
-	minifyHTML(`
-		<!DOCTYPE html>
-		<html>
-			<head>
-				<link rel="stylesheet" href="/tinymce/skins/content/default/content.min.css">
-			</head>
-			<body class="mce-content-body">
-				${note.content}
-			</body>
-		</html>
-	`);

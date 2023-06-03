@@ -25,6 +25,9 @@ dependencies:
   '@tinymce/tinymce-react':
     specifier: 4.3.0
     version: 4.3.0(react-dom@18.2.0)(react@18.2.0)
+  '@total-typescript/ts-reset':
+    specifier: 0.4.2
+    version: 0.4.2
   '@trpc/client':
     specifier: 10.21.1
     version: 10.21.1(@trpc/server@10.21.1)
@@ -3704,6 +3707,10 @@ packages:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       tinymce: 6.4.2
+    dev: false
+
+  /@total-typescript/ts-reset@0.4.2:
+    resolution: {integrity: sha512-vqd7ZUDSrXFVT1n8b2kc3LnklncDQFPvR58yUS1kEP23/nHPAO9l1lMjUfnPrXYYk4Hj54rrLKMW5ipwk7k09A==}
     dev: false
 
   /@trpc/client@10.21.1(@trpc/server@10.21.1):
