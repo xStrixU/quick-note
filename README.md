@@ -1,4 +1,3 @@
-
 # QuickNote
 
 A lightweight application designed for creating and managing notes. It provides a convenient way to jot down and organize your thoughts, ideas, and reminders. With a clean and intuitive interface, this app focuses on simplicity and efficiency.
