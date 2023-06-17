@@ -1,36 +1,80 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+# QuickNote
 
-First, run the development server:
+A lightweight application designed for creating and managing notes. It provides a convenient way to jot down and organize your thoughts, ideas, and reminders. With a clean and intuitive interface, this app focuses on simplicity and efficiency.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+## Live preview
+You can try live preview here: https://quick-note-steel.vercel.app <br /><br />
+Credentials:
+|          Email         |     Password     |
+| :--------------------: | :--------------: |
+| live.preview@gmail.com | RnDfTCZW6N58uEkJ |
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Technology stack
+Technology stack used to create this application:
+|   Technology    |              Usage               | 
+| :-------------: | :------------------------------: |
+|   TypeScript    |       Programming languge        |
+|      React      |      User Interface Library      |
+|     Next.js     |         Framework & SSR          |
+|   TailwindCSS   |          CSS Framework           |
+|    Storybook    |     UI Component Development     |
+| TanStack Query  | Data Fetching & State Management |
+| React Hook Form |          Forms Handling          |
+|       PWA       |        Progressive Web App       |
+|      tRPC       |       Type-Safe Backend API      |
+|     Prisma      |           Database ORM           |
+|   NextAuth.js   |      Authentication Library      |
+|   PostgreSQL    |       Relational Database        |
+|     Docker      |    Containerization Platform     | 
+|     Vitest      |        Testing Framework         |
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Installation and usage
+### Installation
+1. Clone the repository:
+   ```sh
+   git clone https://github.com/xStrixU/quick-note.git
+   ```
+2. Navigate to the project directory:
+   ```sh
+   cd quick-note
+   ```
+3. Install dependencies:
+   ```sh
+   pnpm install
+   ```
+### Usage
+Usage is different depending on the selected mode: *development* or *production*.
+#### Development mode:
+1. Copy the `.env.example` file to the `.env.development.local` file
+2.  Fill the environment variables
+3. Run the application in development mode:
+   ```sh
+   pnpm dev
+   ```
+#### Production mode:
+1. Copy the `.env.example` file to the `.env.production.local` file
+2.  Fill the environment variables
+3. Build the application:
+   ```sh
+   pnpm next:build
+   ```
+4. Run the application in production mode:
+   ```sh
+   pnpm start
+   ```
 
-[http://localhost:3000/api/hello](http://localhost:3000/api/hello) is an endpoint that uses [Route Handlers](https://beta.nextjs.org/docs/routing/route-handlers). This endpoint can be edited in `app/api/hello/route.ts`.
+## Preview
+![image](https://github.com/xStrixU/quick-note/assets/41890821/b2fe940a-e540-441b-adda-45d9771f2fbb)
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Write notes:
+![image](https://github.com/xStrixU/quick-note/assets/41890821/c002f3bb-c8fb-4fb3-a427-d6678f56d6a8)
 
-## Learn More
+Invite other people:
+![image](https://github.com/xStrixU/quick-note/assets/41890821/43d3162b-9417-4fe8-9f1d-45daedba41ad)
 
-To learn more about Next.js, take a look at the following resources:
+Share notes:
+![image](https://github.com/xStrixU/quick-note/assets/41890821/39988462-2934-4e12-9226-4fe51264c2bd)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## License
+MIT License, see [LICENSE](LICENSE).
