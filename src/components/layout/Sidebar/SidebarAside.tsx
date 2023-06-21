@@ -25,7 +25,7 @@ export const SidebarAside = ({
 	const sidebarRef = useRef(null);
 	const [sidebarWidth, setSidebarWidth] = useState(280);
 
-	const isNoteOpen = Boolean(params.slug);
+	const isNoteOpen = Boolean(params.slug) && params.slug !== 'index';
 
 	const updateSidebarWidth = (width: number) => {
 		setSidebarWidth(width);
