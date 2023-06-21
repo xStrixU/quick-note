@@ -15,11 +15,13 @@ const EditNoteLayout = ({
 }: EditNoteLayoutProps) => {
 	const noteId = slug?.[0];
 
+	const isNoteId = Boolean(noteId) && noteId !== 'index';
+
 	return (
 		<main
 			className={twMerge(
 				'grow overflow-hidden',
-				!noteId && 'hidden desktop:block'
+				!isNoteId && 'hidden desktop:block'
 			)}
 		>
 			{children}
